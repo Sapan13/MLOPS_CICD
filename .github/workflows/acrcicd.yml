@@ -61,9 +61,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build \
-            -t ${{ vars.ACR_LOGIN_SERVER }}/python-cicd-app:${{ github.sha }} \
-            .
+          docker build -t ${{ vars.ACR_LOGIN_SERVER }}/python-cicd-app:${{ github.sha }}         .
 
       - name: Push Docker image
         run: |
