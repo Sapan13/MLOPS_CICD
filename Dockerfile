@@ -1,7 +1,7 @@
 #python:3.10-slim debian variant of linux
 
 # Using slim version to keep the image size small
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 # Set the working directory in the container
 WORKDIR /CICDApp
@@ -13,13 +13,13 @@ COPY requirements.txt /CICDApp/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current directory contents into the container at /CICDApp
-COPY lec9_CI/ ./CICDApp
+COPY app/ ./CICDApp
 
 # Make port 8000 available to the world outside this container
 #CMD ["python", "-m", "flask", "--app", "hello_flask.py", "run", "--host=0.0.0.0", "--port=9000"]
 
-CMD ["python", "-c", "from CICDApp.base_file import add; print(add(2, 3))"]
+#CMD ["python", "-c", "from CICDApp.base_file import add; print(add(2, 3))"]
 # RUN command runs only once, when the container is being built. CMD command runs every time the container is started.
-
+CMD ["uvicorn", "CICDApp.main:app", "--host", "0.0.0.0", "--port", "8000"]
 #docker run -p 8000:9000 oct8
 # first 8000 is host port and second 9000 is container port
